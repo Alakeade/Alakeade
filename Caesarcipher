@@ -1,0 +1,49 @@
+def caesar_cipher(text, shift, mode='encrypt'):
+    """
+    Encrypts or decrypts a message using the Caesar cipher algorithm.
+
+    :param text: The input message to process.
+    :param shift: The shift value (an integer).
+    :param mode: 'encrypt' to encrypt or 'decrypt' to decrypt.
+    :return: The processed message.
+    """
+    if mode == 'decrypt':
+        shift = -shift
+
+    result = []
+    for char in text:
+        if char.isalpha():
+            base = ord('A') if char.isupper() else ord('a')
+            shifted_char = chr((ord(char) - base + shift) % 26 + base)
+            result.append(shifted_char)
+        else:
+            result.append(char)  # Non-alphabetic characters are unchanged
+
+    return ''.join(result)
+
+
+def main():
+    print("Welcome to the Caesar Cipher Program!")
+
+    while True:
+        mode = input("Would you like to encrypt or decrypt a message? (type 'encrypt', 'decrypt', or 'exit'): ").lower()
+        if mode == 'exit':
+            print("Goodbye!")
+            break
+        if mode not in ('encrypt', 'decrypt'):
+            print("Invalid option. Please try again.")
+            continue
+
+        text = input("Enter the message: ")
+        try:
+            shift = int(input("Enter the shift value (integer): "))
+        except ValueError:
+            print("Invalid shift value. Please enter an integer.")
+            continue
+
+        result = caesar_cipher(text, shift, mode)
+        print(f"The {mode}ed message is: {result}\n")
+
+
+if __name__ == "__main__":
+    main()
